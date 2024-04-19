@@ -1,2 +1,2 @@
-python-dotenv = 1.0.1
-googlemaps = 4.10.0
+python-dotenv==1.0.1
+googlemaps==4.10.0
