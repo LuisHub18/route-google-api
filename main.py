@@ -4,7 +4,9 @@ import os
 import csv
 load_dotenv()
 
-gmaps = googlemaps.Client(key=os.getenv('API_KEY'))
+API_KEY = os.getenv('API_KEY')
+
+gmaps = googlemaps.Client(key=API_KEY)
 
 points = {
     "forum" : (24.814255766993092, -107.40069025553083),
@@ -37,11 +39,10 @@ for origin_name, origin_coords in points.items():
             distance = gmaps.distance_matrix(origin_coords, destination_coords)['rows'][0]['elements'][0]['distance']['value']
             distances[(origin_name, destination_name)] = distance
 
-# Guarda las distancias en un archivo CSV
-with open('distances.csv', 'w', newline='') as csvfile:
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
+with open(f'{dir_path}/distances.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['Origen', 'Destino', 'Distancia'])
     for (origin, destination), distance in distances.items():
         writer.writerow([origin, destination, distance])
-
-
